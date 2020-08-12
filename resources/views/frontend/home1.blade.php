@@ -84,7 +84,7 @@ SELPHY SHOP
 														
 														@if($product->discount_percent != 0)
 														<div class="label-pro-sale" style="border-radius: 8px;
-														height: auto;">Giảm {{$product->discount_percent}} %</div>
+														height: auto;width:75px;">Giảm {{$product->discount_percent}} %</div>
 														@else
 														<div class="label-pro-new">Mới</div>
 														@endif
@@ -144,7 +144,7 @@ SELPHY SHOP
 													<div class="singel-product single-product-col">
 														@if($product->discount_percent != 0)
 														<div class="label-pro-sale" style="border-radius: 8px;
-														height: auto;">Giảm {{$product->discount_percent}} %</div>
+														height: auto;width:75px;">Giảm {{$product->discount_percent}} %</div>
 														@else
 														<div class="label-pro-new">Mới</div>
 														@endif
@@ -197,25 +197,25 @@ SELPHY SHOP
 												<!-- Random Carousel -->
 												<div id="random-carousel-2" class="owl-carousel custom-carousel">
 													<!-- Single Product -->
-													@foreach($products as $product)
+													@foreach($products_random as $product_rd)
 													<div class="singel-product single-product-col">
-														@if($product->discount_percent != 0)
+														@if($product_rd->discount_percent != 0)
 														<div class="label-pro-sale" style="border-radius: 8px;
-														height: auto;">Giảm {{$product->discount_percent}} %</div>
+														height: auto;width:75px;">Giảm {{$product_rd->discount_percent}} %</div>
 														@else
 														<div class="label-pro-new">Mới</div>
 														@endif
 														<!-- Single Product Image -->
 														<div class="single-product-img">
 															@foreach($thumbnails as $thumbnail )
-															@if($thumbnail->product_id == $product->id)
+															@if($thumbnail->product_id == $product_rd->id)
 															<a href="#"><img src="{{$thumbnail->path}}" alt="product"></a>
 															@endif
 															@endforeach
 														</div>
 														<!-- Single Product Content -->
 														<div class="single-product-content">
-															<h2 class="product-name"><a title="Proin lectus ipsum" href="{{route('frontend.home.productdetail',$product->id)}}">{{$product->name}}</a></h2>
+															<h2 class="product-name"><a title="Proin lectus ipsum" href="{{route('frontend.home.productdetail',$product_rd->id)}}">{{$product_rd->name}}</a></h2>
 															<div class="ratings">
 																<div class="rating-box">  
 																	<div class="rating">
@@ -228,7 +228,7 @@ SELPHY SHOP
 																</div>
 															</div>
 															<div class="product-price">
-																<p><span>{{number_format($product->origin_price)}} đ</span>{{number_format($product->sale_price)}} đ</p>
+																<p><span>{{number_format($product_rd->origin_price)}} đ</span>{{number_format($product_rd->sale_price)}} đ</p>
 															</div>
 															<!-- Single Product Actions -->
 															<div class="product-actions">
@@ -237,7 +237,7 @@ SELPHY SHOP
 																	<ul class="">
 																		<li class="quic-view">
 																			{{-- <a href="{{route('frontend.cart.addtocarttest',$product->id)}}">Mua Ngay</a> --}}
-																			<a href="javascript:void(0)" id="add_to_cart" value="{{$product->id}}">Mua Ngay</a>
+																			<a href="javascript:void(0)" id="add_to_cart" value="{{$product_rd->id}}">Mua Ngay</a>
 
 																		</li>
 																		<li class="wishlist"><a href="#"><i class="fa fa-heart"></i></a></li>
@@ -272,11 +272,11 @@ SELPHY SHOP
 												<!-- Product View Carousel -->
 												<div id="laptop-carousel" class="owl-carousel custom-carousel">
 													<!-- Single Product -->
-													@foreach($products as $product)
+													@foreach($products_pk as $product)
 													<div class="singel-product single-product-col">
 														@if($product->discount_percent != 0)
 														<div class="label-pro-sale" style="border-radius: 8px;
-														height: auto;">Giảm {{$product->discount_percent}} %</div>
+														height: auto;width:75px;">Giảm {{$product->discount_percent}} %</div>
 														@else
 														<div class="label-pro-new">Mới</div>
 														@endif
@@ -351,11 +351,11 @@ SELPHY SHOP
 												<!-- Product View Carousel -->
 												<div id="tablet-carousel" class="owl-carousel custom-carousel">
 													<!-- Single Product -->
-													@foreach($products as $product)
+													@foreach($products_tablet as $product)
 													<div class="singel-product single-product-col">
 														@if($product->discount_percent != 0)
 														<div class="label-pro-sale" style="border-radius: 8px;
-														height: auto;">Giảm {{$product->discount_percent}} %</div>
+														height: auto;width:75px;">Giảm {{$product->discount_percent}} %</div>
 														@else
 														<div class="label-pro-new">Mới</div>
 														@endif
@@ -382,7 +382,11 @@ SELPHY SHOP
 																</div>
 															</div>
 															<div class="product-price">
+																@if($product->origin_price == $product->sale_price)
+																<p>{{number_format($product->sale_price)}} đ</p>
+																@else
 																<p><span>{{number_format($product->origin_price)}} đ</span>{{number_format($product->sale_price)}} đ</p>
+																@endif
 															</div>
 															<!-- Single Product Actions -->
 															<div class="product-actions">

@@ -12,6 +12,8 @@ use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Order;
 
 class HomeController extends Controller
@@ -23,11 +25,39 @@ class HomeController extends Controller
     $totalPrice = Cart::priceTotal();
     $posts = Post::orderby('updated_at','desc')->limit(3)->get();
     $products = Product::orderby('updated_at','desc')->Paginate(10);
+    $products_random = Product::get()->random(10);
+
+    //Phụ kiện:
+    $category = Category::find(20);
+    $categories = Category::where('parent_id',$category->id)->get();
+
+    $category_condition = [];
+    foreach ($categories as $category) {
+      $category_condition[] = $category->id;
+
+    }
+    $products_pk = Product::whereIn('category_id',$category_condition)->orderby('updated_at','desc')->get();
+
+    //Tablet:
+    $category_tablet = Category::find(14);
+    $categories = Category::where('parent_id',$category_tablet->id)->get();
+
+    $category_condition = [];
+    foreach ($categories as $category) {
+      $category_condition[] = $category->id;
+
+    }
+    $products_tablet = Product::whereIn('category_id',$category_condition)->orderby('updated_at','desc')->get();
+
+
     $products_discount = Product::where('view_count','>',10)->orderby('updated_at','desc')->get();
     $products_featured = Product::where('view_order','>',15)->orderby('updated_at','desc')->take(5)->get();
     $thumbnails = Image::where('status',1)->get();
     return view('frontend.home1')->with([
       'products'=>$products,
+      'products_random'=>$products_random,
+      'products_pk'=>$products_pk,
+      'products_tablet'=>$products_tablet,
       'thumbnails'=>$thumbnails,
       'posts'=>$posts,
       'products_discount'=>$products_discount,
@@ -101,7 +131,7 @@ class HomeController extends Controller
       }
     }
 
-    $products = $products->Paginate(12);
+    $products = $products->Paginate(16);
     $thumbnails = Image::where('status',1)->get();
 
     return view('frontend.shop')->with([
@@ -417,5 +447,40 @@ class HomeController extends Controller
     }
 
   }
+  public function update_account(Request $request,$id)
+  {
+    $user = Auth::user();
+    $name = $request->input('name');
+    $phone = $request->input('phone');
+    $email = $request->input('email');
+    $address = $request->input('address');
+    $password = $request->input('password');
+
+
+    $user->name = $name;
+    $user->phone = $phone;
+    $user->email = $email;
+    $user->address = $address;
+    if($password == null){
+      $user->password = $user->password;
+    }else{
+      $user->password = Hash::make($password);
+    }
+    if($request->has('avatar')){
+     $avatar = $request->file('avatar');
+     $namefile = $avatar->getClientOriginalName();
+     $avatar_user = Storage::disk('public')->putFileAs('avatars',$avatar,$namefile);
+     $url = Storage::url($avatar_user);
+
+   }else{
+     $url = '/storage/avatars/avatar.jpg'; 
+   }
+   $user->avatar = $url;
+
+   $user->save();
+
+   return redirect()->route('frontend.home.myaccount');
+ }
+
 
 }

@@ -69,6 +69,9 @@ Route::group([
 	Route::get('/delete_item/{rowId}','AjaxController@remove_item')->name('frontend.ajax.removeitem');
 	//Thêm vào giỏ hàng:
 	Route::get('/add_to_cart/{id}','AjaxController@add_to_cart')->name('frontend.ajax.addtocart');
+
+	//Update acount:
+	Route::post('update_account/{id}','HomeController@update_account')->name('frontend.home.update_account');
 });
 
 
@@ -79,6 +82,8 @@ Route::group([
 ],function(){
 	//Trang dashboard - trang chủ admin
 	Route::get('/dashboard','DashboardController@index')->name('backend.dashboard');
+	
+
 	
 	//Trang quản lý users:
 	Route::group(['prefix'=>'users'],function(){
@@ -152,5 +157,34 @@ Route::group([
 //Đăng ký & đăng nhập:
 Auth::routes();
 Route::get('/loginform','Auth\LoginController@showLoginForm')->name('login.form');
+Route::get('/redirect', 'Auth\LoginController@redirectToProvider')->name('social.redirect');
+Route::get('/callback', 'Auth\LoginController@handleProviderCallback');
+
+Route::get('/auth/redirect/{provider}', 'Backend\SocialAuthController@redirect');
+Route::get('/callback/{provider}', 'Backend\SocialAuthController@callback');
+
+//elastic search:
+Route::get('ItemSearch', 'Backend\ItemSearchController@index')->name('form.search');
+Route::post('ItemSearchCreate', 'Backend\ItemSearchController@create')->name('form.create');
+
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+use App\Models\Item;
+
+Route::get('/test', function () {
+    Item::createIndex($shards = null, $replicas = null);
+
+    Item::putMapping($ignoreConflicts = true);
+
+    Item::addAllToIndex();
+
+    return view('welcome');
+});
+
+Route::get('/searchtest', function() {
+
+    $articles = Item::searchByQuery(['match' => ['title' => 'Sed']]);
+
+    return $articles;
+});

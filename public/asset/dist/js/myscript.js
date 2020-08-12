@@ -2,6 +2,7 @@ $(document).ready(function() {
 	$("a#del_img_demo").on('click', function(event) {
 		event.preventDefault();
 		var url = "http://127.0.0.1:8000/admin/products/delete_image/";
+
 		var _token = $("form[name='frmEditProduct']").find("input[name='_token']").val();
 
 		var idHinh = $(this).parent().find("img").attr("idHinh");

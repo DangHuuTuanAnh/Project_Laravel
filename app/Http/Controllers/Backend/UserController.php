@@ -10,6 +10,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use Response;
 use App\Models\User;
 use Illuminate\Support\Facades\input;
@@ -24,7 +25,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->orderby('updated_at','desc')->simplePaginate(5);
+        // $users = DB::table('users')->orderby('updated_at','desc')->Paginate(5);
+        $users = DB::table('users')->orderby('updated_at','desc')->get();
 
         return view('backend.users.index')->with([
         	'users'=>$users
@@ -70,7 +72,7 @@ class UserController extends Controller
         $user->email = $email;
         $user->phone = $phone;
         $user->address = $address;
-        $user->password = md5($password);
+        $user->password = Hash::make($password);
         $user->role = $role;
 
         if($request->has('avatar')){
@@ -162,7 +164,7 @@ class UserController extends Controller
         $user->email= $email;
         $user->phone= $phone;
         $user->address= $address;
-        $user->password= md5($password);
+        $user->password= Hash::make($password);
         if($request->has('avatar')){
            $avatar = $request->file('avatar');
            $namefile = $avatar->getClientOriginalName();

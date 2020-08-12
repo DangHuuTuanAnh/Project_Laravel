@@ -2,6 +2,39 @@
 @section('title')
 PRODUCT DETAIL
 @endsection
+@section('css')
+<style type="text/css">
+.list_text{
+	display: inline-block;
+	margin-left: 10px;
+	position: relative;
+	background: #52b858;
+	color: #fff;
+	padding: 2px 8px;
+	box-sizing: border-box;
+	font-size: 12px;
+	border-radius: 2px;
+	display: none;
+}
+.list_text:after{
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(82,184,88,0);
+	border-right-color: #52b858;
+	border-width: 6px;
+	margin-top: -6px;
+}
+.list_star .rating_active{
+	color:#fd9727;
+}
+</style>
+@endsection
 
 @section('content')
 <body>
@@ -141,16 +174,38 @@ PRODUCT DETAIL
 								<p class="availability in-stock">Tình trạng: <span>Còn hàng</span></p>
 
 								<div class="quick-desc">
-									<div class="btn btn-danger"><i class="fa fa-gift" aria-hidden="true"></i>&nbsp;KHUYẾN MÃI</div>
-									<div style="border: 1px solid red; border-radius: 4px; width: 65%;" >
-										<p><b>&nbsp;Trả góp 0%:</b></p>
-										<ul>
-											<li style="list-style: block!important; padding-left: 15px;
-										}">- Trả góp lãi suất 0% với Home Credit. Trả trước 30%, kỳ hạn 6 tháng (Áp dụng cùng các khuyến mại khác)</li>
-										<li style="list-style: block!important;padding-left: 15px;
-									}">- Trả góp 0% với FE Credit - trả trước từ 30% (áp dụng cùng các khuyến mãi khác)</li>
-								</ul>
-							</div>
+									{{-- <div class="col-6"> --}}
+										<div class="btn btn-danger"><i class="fa fa-gift" aria-hidden="true"></i>&nbsp;KHUYẾN MÃI</div>
+										<div style="border: 1px solid red; border-radius: 4px; width: 65%;" >
+											<p><b>&nbsp;Trả góp 0%:</b></p>
+											<ul>
+												<li style="list-style: block!important; padding-left: 15px;
+											}">- Trả góp lãi suất 0% với Home Credit. Trả trước 30%, kỳ hạn 6 tháng (Áp dụng cùng các khuyến mại khác)</li>
+											<li style="list-style: block!important;padding-left: 15px;
+										}">- Trả góp 0% với FE Credit - trả trước từ 30% (áp dụng cùng các khuyến mãi khác)</li>
+									</ul>
+								</div>
+							{{-- </div> --}}
+
+							{{-- <div style="width: 50%;" class="col-6">
+								<table class="table table-hover" style="border: 1px solid #ccc;">
+									<thead class="thead-light">
+										<tr>
+											<th style="text-align: center;" colspan="2" scope="col">Thông số chi tiết của sản phẩm</th>
+										</tr>
+									</thead>
+									<tbody  style="text-align: center;">
+										@if($arr_config != null)
+										@foreach($arr_config as $key => $value)
+										<tr>
+											<td style="border-right: 1px solid #dee2e6;"><b>{{$key}}</b></td>
+											<td>{{$value}}</td>
+										</tr>
+										@endforeach
+										@endif
+									</tbody>
+								</table>
+							</div> --}}
 						</div>
 						<div class="price-box">
 							<p class="price"><span class="special-price"><span class="amount">{{number_format($product->sale_price)}} đ</span></span></p>
@@ -239,29 +294,83 @@ PRODUCT DETAIL
 							</div>
 						</div>
 						<div class="tab-pane" id="product-tag">
-							
-							<div>
-								<h4>Viết bình luận...</h4>
-								<form method="POST" action="{{route('frontend.home.comment',$product->id)}}" role="form">
-									@csrf
-									<div class="form-group">
-										<textarea name="comment" class="form-control" rows="3"></textarea>
+							{{-- <div class="component_rating_content" style="display: flex; align-items: center;">
+								<div class="rating_item" style="width: 20%;">
+									<span class="fa fa-star" style="font-size: 50px;color: #fd9727 "><b>2.5</b></span>
+								</div>
+								<div class="list_rating" style="width: 60%;padding: 20px;">
+									@for($i = 1;$i <= 5;$i++)
+									<div class="item_rating" style="display: flex;align-items: center;">
+										<div style="width: 10%;">
+											{{$i}} <span class="fa fa-star"></span>
+										</div>
+										<div style="width: 70%;margin-left: 0 20px;">
+											<span style="width: 100%;height: 8px;display: block;border: 1px solid #dedede"><b style="width: 30%;background-color: #f44336;"></b></span>
+										</div>
+										<div style="width: 20%;">
+											<a href="">290 đánh giá</a>
+										</div>
 									</div>
-									<button type="submit" class="btn btn-primary">Gửi</button>
-								</form>
-							</div>
-							{{-- <div>
-								@foreach($all_comment as $comment)
-								<p>{{$comment->content}}</p>
-								
-								@endforeach
+									@endfor
+								</div>
+								<div style="width: 20%;">
+									<a href="" class="btn btn-info">Gửi đánh giá của bạn</a>
+								</div>
 							</div> --}}
+							<div class="row">
+								<div class="col-3">
+									<div class="container" style="text-align: center;
+									margin-top: 22px;">
+									<span class="fa fa-star" style="font-size: 45px;
+									color: #fd9727;"><b>2.5</b></span>
+								</div>
+							</div>
+							<div class="col-6">
+								@for($i = 1;$i <= 5;$i++)
+								<div class="row">
+									<div class="col-2">
+										{{$i}} <span  class="fa fa-star" style="color: #fd9727;"></span>
+									</div>
+									<div class="col-7" style="margin-top: 7px;">
+										<div class="progress" style="height: 8px;">
+											<div  class="progress-bar" role="progressbar" style="width: 25%;background-color: #17a2b8; " aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+										</div>
+									</div>
+									<div class="col-3">
+										<a href="">290 đánh giá</a>
+									</div>
+								</div>
+								@endfor
+							</div>
+							<div class="col-3" style="text-align: center;
+							margin-top: 22px;">
+							<a href="" class="btn btn-info js-rating-action">Gửi đánh giá của bạn</a>
+						</div>
+						<?php
+						
+						?>
+						<div class="container form_rating hidden ">
+							<div style="text-align: center;margin-top: 20px;">
+								<p>Vui lòng chọn đánh giá:</p>
+								<span class="list_star">
+									@for($i = 1 ;$i <=5;$i++)
+									<i class="fa fa-star" style="font-size: 25px;" data-key="{{$i}}"></i>
+									@endfor
+								</span>
+								<span class="list_text" >Tốt</span>
+							</div>
+							<div>
+								<textarea name=""  cols="30" rows="3"></textarea>
+							</div>
+							<a href="" class="btn btn-info ">Gửi đánh giá</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
+</div>
 </div><!-- End Single Description Tab -->
 <!-- Product Area -->
 <div class="product-area ">
@@ -317,240 +426,7 @@ PRODUCT DETAIL
 									</div><!-- End Single Product Content -->
 								</div>
 								@endforeach<!-- End Single Product -->
-								{{-- <!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-new">New</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s2.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">Proin lectus ipsum</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-sale">hot</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s9.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html"> Donec ac tempus </a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p><span>$114.00</span>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-sale">hot</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s3.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">Proin lectus ipsum</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p><span>$345.00</span>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-new">New</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s1.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">Nunc facilisis</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-new">New</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s2.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">consequences</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-new">New</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s6.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">Proin lectus ipsum</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-new">New</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s5.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">Quisque in arcu</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-sale">hot</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s4.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">Proin lectus ipsum</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-sale">hot</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s3.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">Cras neque metus</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p><span>$345.00</span>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product --> --}}
+								
 							</div><!-- End Product View Carousel -->
 						</div><!-- End Product View-->
 					</div><!-- End Single Product Category -->
@@ -601,188 +477,6 @@ PRODUCT DETAIL
 									</div><!-- End Single Product Content -->
 								</div>
 								@endforeach<!-- End Single Product -->
-								{{-- <!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-sale">hot</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s3.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">Proin lectus ipsum</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p><span>$345.00</span>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-new">New</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s1.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">Nunc facilisis</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-new">New</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s2.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">consequences</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-new">New</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s6.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">Proin lectus ipsum</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-new">New</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s5.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">Quisque in arcu</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-sale">hot</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s4.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">Proin lectus ipsum</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product -->
-								<!-- Single Product -->
-								<div class="singel-product single-product-col">
-									<div class="label-pro-sale">hot</div>
-									<!-- Single Product Image -->
-									<div class="single-product-img">
-										<a href="#"><img src="{{URL::asset('frontend1/img/products/s3.jpg')}}" alt="product"></a>
-									</div>
-									<!-- Single Product Content -->
-									<div class="single-product-content">
-										<h2 class="product-name"><a title="Proin lectus ipsum" href="product-details.html">Cras neque metus</a></h2>
-										<div class="ratings">
-											<div class="rating-box">  
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>  
-											</div>
-										</div>
-										<div class="product-price">
-											<p><span>$345.00</span>$99.00</p>
-										</div>
-									</div><!-- End Single Product Content -->
-								</div><!-- End Single Product --> --}}
 							</div><!-- End Product View Carousel -->
 						</div><!-- End Product View-->
 					</div><!-- End Single Product Category -->
@@ -795,4 +489,39 @@ PRODUCT DETAIL
 <!-- Brand Area -->
 
 </body>
+@endsection
+@section('script')
+<script type="text/javascript">
+	$(function(){
+		let listStar = $(".list_star .fa");
+		ListRatingText = {
+			'1':'Không thích',
+			'2':'Tạm được',
+			'3':'Bình thường',
+			'4':'Rất tốt',
+			'5':'Tuyệt vời quá',
+		}
+		listStar.mouseover(function(){
+			let $this = $(this);
+			let number =$this.attr('data-key');
+			listStar.removeClass('rating_active');
+			$.each(listStar,function(key,value){
+				if ( key +1 <= number) {
+					$(this).addClass('rating_active')
+				}
+			});
+			$(".list_text").text('').text(ListRatingText[number]).show();
+		});
+
+		$(".js-rating-action").click(function(event) {
+			event.preventDefault();
+			if ($(".form_rating").hasClass('hidden')) {
+				$(".form_rating").addClass('active').removeClass('hidden');
+			}else{
+				$(".form_rating").addClass('hidden').removeClass('active');
+
+			}
+		});
+	});
+</script>
 @endsection

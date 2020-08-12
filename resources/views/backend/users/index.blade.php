@@ -7,8 +7,8 @@
     <div class="wrapper">
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-         <!-- Content Header -->
-         <div class="container-fluid">
+           <!-- Content Header -->
+           <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0 text-dark">Danh sách người dùng</h1>
@@ -138,7 +138,7 @@
                             </div>
                         </div>
 
-                        <div class="card-tools">
+                        {{-- <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
 
@@ -146,11 +146,63 @@
                                     <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-hover">
+                       {{--  <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên</th>
+                                    <th>Ảnh đại diện</th>
+                                    <th>Email</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($users as $user)
+                                <tr>
+                                    <td>{{$user->id}}</td>
+                                    <td>{{$user->name}}</td>
+                                    <td><img style="width: 70px;" src="{{$user->avatar}}"></td>
+                                    <td>{{$user->email}}</td>
+                                    <td>
+                                        <div class="row">
+                                            @can('create')
+                                            <form style="margin-right: 5px; " action="{{route('backend.user.show',$user->id)}}">
+                                                <button type="submit" class="btn btn-success">
+                                                    <i class="fa fa-btn fa-eye"></i>
+                                                </button>
+                                            </form>
+                                            <form style="margin-right: 5px; " action="{{route('backend.user.edit',$user->id)}}" >
+
+                                                <button id="update" type="submit" class="btn btn-primary">
+                                                    <i class="fa fa-btn fa-edit"></i>
+                                                </button>
+                                            </form>
+                                            <form style="margin-right: 5px; " action="{{route('backend.user.destroy',$user->id)}}" >
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="fa fa-btn fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                            @endcan
+                                            @cannot('create')
+                                            <form style="margin-right: 5px; " action="{{route('backend.user.show',$user->id)}}">
+                                                <button type="submit" class="btn btn-success">
+                                                    <i class="fa fa-btn fa-eye"></i>
+                                                </button>
+                                            </form>
+                                            @endcannot
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table> --}}
+                        <table id="table_id" class="display">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -202,9 +254,8 @@
                                 @endforeach
                             </tbody>
                         </table>
-
                     </div>
-                    {!! $users->links() !!}
+                    {{-- {!! $users->links() !!} --}}
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->

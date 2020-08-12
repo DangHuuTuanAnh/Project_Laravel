@@ -1,3 +1,4 @@
+<!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
   <!-- Left navbar links -->
   <ul class="navbar-nav">
@@ -67,7 +68,7 @@
     alt="AdminLTE Logo"
     class="brand-image img-circle elevation-3"
     style="opacity: .8">
-    <span class="brand-text font-weight-light">AdminLTE 3</span>
+    <span class="brand-text font-weight-light">Trang Quản Trị</span>
   </a>
 
   <!-- Sidebar -->

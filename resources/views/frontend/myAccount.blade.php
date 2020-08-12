@@ -20,7 +20,7 @@ MY ACCOUNT
 					<div class="new-customers customer">
 						<div class="customer-inner">
 							<div class="user-title">
-								<h2><i class="fa fa-file"></i>Quản lý thông tin</h2>
+								<h2><i class="fa fa-file"></i>Thông tin của tôi</h2>
 							</div>
 							<div class="user-content">
 								<!-- Profile Image -->
@@ -32,6 +32,7 @@ MY ACCOUNT
 											src="{{$user->avatar}}"
 											alt="User profile picture">
 										</div>
+
 
 										<h3 class="profile-username text-center">{{$user->name}}</h3>
 
@@ -47,7 +48,9 @@ MY ACCOUNT
 											<li class="list-group-item">
 												<b>Địa chỉ:</b> <a class="float-right">{{$user->address}}</a>
 											</li>
-											
+											<li class="list-group-item">
+												<b>Đơn hàng đã mua:</b> <a class="float-right"></a>
+											</li>
 										</ul>
 									</div>
 									<!-- /.card-body -->
@@ -57,18 +60,74 @@ MY ACCOUNT
 						</div>
 						
 					</div>
+					<br>
+					<div class="new-customers customer">
+						<div class="customer-inner">
+							<div class="user-title">
+								<h2><i class="fa fa-shopping-cart"></i></i>Đơn hàng của tôi</h2>
+							</div>
+							<div class="user-content">
+								<div class="accordion" id="accordionExample">
+									<div class="card">
+										<div class="card-header" id="headingOne">
+											<h2 class="mb-0">
+												<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+													Collapsible Group Item #1
+												</button>
+											</h2>
+										</div>
+
+										<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+											<div class="card-body">
+												Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+											</div>
+										</div>
+									</div>
+									<div class="card">
+										<div class="card-header" id="headingTwo">
+											<h2 class="mb-0">
+												<button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+													Collapsible Group Item #2
+												</button>
+											</h2>
+										</div>
+										<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+											<div class="card-body">
+												Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+											</div>
+										</div>
+									</div>
+									<div class="card">
+										<div class="card-header" id="headingThree">
+											<h2 class="mb-0">
+												<button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+													Collapsible Group Item #3
+												</button>
+											</h2>
+										</div>
+										<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+											<div class="card-body">
+												Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
 				</div>
 				<div class="col-lg-6 col-md-6">
 					<div class="resestered-customers customer">
 						<div class="customer-inner">
 							<div class="user-title">
-								<h2><i class="fa fa-file-text"></i>Cập nhật thông tin</h2>
+								<h2><i class="fa fa-pencil-square"></i></i>Cập nhật thông tin</h2>
 							</div>
 							{{-- <div class="user-content">
 								<p>If you have an account with us, please log in.</p>
 							</div> --}}
 							<div class="account-form">
-								<form action="{{route('backend.user.update',$user->id)}}" method="POST" role="form" enctype="multipart/form-data">
+								<form action="{{route('frontend.home.update_account',$user->id)}}" method="POST" role="form" enctype="multipart/form-data">
 									{{ csrf_field() }}
 									<div class="card-body">
 										<div class="form-group">
@@ -77,6 +136,14 @@ MY ACCOUNT
 											@error('name')
 											<p style="color: red;">{{$message}}</p>
 											@enderror
+										</div>
+										<div class="form-group">
+											<label>Ảnh đại diện</label>
+											<div class="input-group">
+												<div class="custom-file">
+													<input class="form-control" type="file" name="avatar">
+												</div>
+											</div>
 										</div>
 										<div class="form-group">
 											<label for="exampleInputEmail1">Email</label>
@@ -113,18 +180,8 @@ MY ACCOUNT
 											<p style="color: red;">{{$message}}</p>
 											@enderror
 										</div>
-										{{-- <div class="form-group">
-											<label for="exampleInputFile">Ảnh đại diện</label>
-											<div class="input-group">
-												<div class="custom-file">
-													<input name="avatar"  type="file" class="custom-file-input" id="exampleInputFile">
-													<label class="custom-file-label" for="exampleInputFile">Choose file</label>
-												</div>
-												<div class="input-group-append">
-													<span class="input-group-text" id="">Upload</span>
-												</div>
-											</div>
-										</div> --}}
+										
+										
 									</div>
 									<!-- /.card-body -->
 

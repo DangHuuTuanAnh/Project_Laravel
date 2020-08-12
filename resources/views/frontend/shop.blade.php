@@ -112,7 +112,7 @@ SHOP PAGE
 						<!-- Shop Layout Banner -->
 						<div class="shop-layout-banner single-banner">
 							<a href="#">
-								<img alt="banner" src="{{URL::asset('frontend1/img/banner/banner1.png')}}">
+								<img alt="banner" src="https://cdn.cellphones.com.vn/media/ltsoft/promotion/s20_series_right_banner_16.7.png">
 							</a>
 						</div><!-- End Shop Layout Banner -->
 						<!-- Popular Tag Area -->
@@ -191,16 +191,16 @@ SHOP PAGE
 							<div class="tab-content">
 								<p id="id_me"></p>
 								<!-- Shop Product-->
-								<div class="tab-pane active" id="shop-product">
+								{{-- <div class="tab-pane active" id="shop-product"> --}}
 									<!-- Tab Single Product-->
 
 									<div id="filter" class="tab-single-product">
 										<!-- Single Product -->
 										@foreach($products as $product)
-										<div class="singel-product single-product-col">
+										<div class="singel-product single-product-col" style="border: 1px solid #e5e5e5;">
 											@if($product->discount_percent != 0)
 											<div class="label-pro-sale" style="border-radius: 8px;
-											height: auto;">Giảm {{$product->discount_percent}} %</div>
+											height: auto;width: 75px;">Giảm {{$product->discount_percent}} %</div>
 											@else
 											<div class="label-pro-new">Mới</div>
 											@endif
@@ -228,7 +228,11 @@ SHOP PAGE
 													</div>
 												</div>
 												<div class="product-price">
+													@if($product->origin_price == $product->sale_price)
 													<p>{{number_format($product->sale_price)}} đ</p>
+													@else
+													<p><span>{{number_format($product->origin_price)}} đ</span>{{number_format($product->sale_price)}} đ</p>
+													@endif
 												</div>
 												<!-- Single Product Actions -->
 												<div class="product-actions">
@@ -252,7 +256,8 @@ SHOP PAGE
 										@endforeach
 									</div><!-- End Tab Single Product-->
 									
-								</div><!-- End Shop Product-->
+								{{-- </div> --}}
+								<!-- End Shop Product-->
 								<!-- Shop List -->
 								<div class="tab-pane" id="shop-list">
 									<!-- Single Shop -->
